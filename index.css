@@ -90,6 +90,9 @@ body {
   padding: 6px;
   background: #5350c4;
   fill: #fff;
+  flex-shrink: 0;
+  margin-bottom: 0;
+  align-self: flex-end;
   border-radius: 50%;
 }
 
@@ -112,7 +115,7 @@ body {
 }
 
 .thinking {
-  height: 40px;
+  min-height: 40px;
 }
 .chat-body .bot-message .thinking-indicator {
   display: flex;
