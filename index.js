@@ -1,10 +1,16 @@
 const chatBody = document.querySelector(".chat-body");
 const messsageInput = document.querySelector(".message-input");
+const fileInput = document.querySelector("#file-input");
+const fileUploadWrapper = document.querySelector(".file-upload-wrapper");
 
 const API_KEY = "AIzaSyCTK9lZnW6ovB-YzDIy-lD8TGLV0c08FWk";
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 const userData = {
   message: null,
+  file: {
+    data: null,
+    mime_type: null,
+  },
 };
 const createMessageElemet = (content, classes) => {
   const div = document.createElement("div");
@@ -23,7 +29,10 @@ const generateBotResponse = async (incomingMessageDiv) => {
     body: JSON.stringify({
       contents: [
         {
-          parts: [{ text: userData.message }],
+          parts: [
+            { text: userData.message },
+            ...(userData.file.data ? [{ inline_data: userData.file }] : []),
+          ],
         },
       ],
     }),
@@ -42,6 +51,8 @@ const generateBotResponse = async (incomingMessageDiv) => {
     messageElement.style.color = "red";
     console.log(error);
   } finally {
+    // reset user file data.
+    userData.file = {};
     chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
   }
 };
@@ -53,7 +64,12 @@ const handleOutGoingMessage = (e) => {
   userData.message = messsageInput.value.trim();
 
   messsageInput.value = "";
-  const messageContent = `<div class="message-text"></div>`;
+  //   create and display user message
+  const messageContent = `<div class="message-text"></div>${
+    userData.file.data
+      ? `<img src="data:${userData.file.mime_type};base64,${userData.file.data}" class="attachment"/>`
+      : ""
+  }`;
   const outgoingMessageDiv = createMessageElemet(
     messageContent,
     "user-message"
@@ -105,6 +121,31 @@ messsageInput.addEventListener("keydown", (e) => {
   }
 });
 
+// handle file input change
+fileInput.addEventListener("change", () => {
+  const file = fileInput.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    fileUploadWrapper.querySelector("img").src = e.target.result;
+    fileUploadWrapper.classList.add("file-uploaded");
+    fileUploadWrapper.querySelector("img").style.display = "block";
+    const base64String = e.target.result.split(",")[1];
+    // store file data in userData
+    userData.file = {
+      data: base64String,
+      mime_type: file.type,
+    };
+    // console.log(e.target.result);
+    fileInput.value = "";
+  };
+  reader.readAsDataURL(file);
+});
+
 document.getElementById("send-message").addEventListener("click", (e) => {
   handleOutGoingMessage(e);
 });
+
+document
+  .querySelector("#file-upload")
+  .addEventListener("click", () => fileInput.click());

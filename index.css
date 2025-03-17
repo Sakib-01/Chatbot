@@ -220,3 +220,27 @@ body {
 .chat-form .chat-control button:hover {
   background-color: #949499;
 }
+
+.chat-form .file-upload-wrapper {
+  height: 35px;
+  width: 35px;
+  position: relative;
+}
+
+.chat-form .file-upload-wrapper img {
+  position: absolute;
+  display: none;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.chat-form .file-upload-wrapper .file-uploaded img {
+  display: block;
+}
+
+.chat-body .user-message .attachment {
+  width: 50%;
+  margin-top: -7px;
+  border-radius: 13px 3px 13px 13px;
+}

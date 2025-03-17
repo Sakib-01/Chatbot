@@ -98,9 +98,17 @@
             <button type="button" class="material-symbols-outlined">
               sentiment_satisfied
             </button>
-            <button type="button" class="material-symbols-outlined">
-              attach_file
-            </button>
+            <div class="file-upload-wrapper">
+              <input type="file"s id="file-input" accept="image/*" hidden />
+              <img src="#" />
+              <button
+                id="file-upload"
+                type="button"
+                class="material-symbols-outlined"
+              >
+                attach_file
+              </button>
+            </div>
             <button
               type="submit"
               id="send-message"
