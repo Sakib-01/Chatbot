@@ -47,7 +47,7 @@ body.show-chatbot #chatbot-toggler span:last-child {
   position: fixed;
   right: 35px;
   bottom: 90px;
-  width: 420px;
+  width: 220px;
   background: #fff;
   overflow: hidden;
   border-radius: 15px;
@@ -117,7 +117,7 @@ body.show-chatbot .chatbot-popup {
   padding: 25px 22px;
   display: flex;
   gap: 20px;
-  height: 400px;
+  height: 200px;
   margin-bottom: 82px;
   overflow-y: auto;
   flex-direction: column;
