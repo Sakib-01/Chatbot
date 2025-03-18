@@ -4,6 +4,7 @@ const fileInput = document.querySelector("#file-input");
 const fileUploadWrapper = document.querySelector(".file-upload-wrapper");
 const fileCancelButton = document.querySelector("#file-cancel");
 const chatbotToggler = document.querySelector("#chatbot-toggler");
+const closeChatbot = document.querySelector("#close-chatbot");
 
 const API_KEY = "AIzaSyCTK9lZnW6ovB-YzDIy-lD8TGLV0c08FWk";
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
@@ -14,6 +15,10 @@ const userData = {
     mime_type: null,
   },
 };
+
+const initialInputHeight = messsageInput.scrollHeight;
+
+// create message element with dynamic classes and return it
 const createMessageElemet = (content, classes) => {
   const div = document.createElement("div");
   div.classList.add("message", classes);
@@ -114,6 +119,7 @@ const handleOutGoingMessage = (e) => {
   if (uploadedImage) {
     uploadedImage.src = "#"; // Reset the image source
     uploadedImage.style.display = "none"; // Hide the image
+    messsageInput.dispatchEvent(new Event("input"));
   }
 
   //   create and display user message
@@ -168,9 +174,21 @@ const handleOutGoingMessage = (e) => {
 
 messsageInput.addEventListener("keydown", (e) => {
   const userMessage = e.target.value.trim();
-  if (e.key === "Enter" && userMessage) {
+  if (
+    e.key === "Enter" &&
+    userMessage &&
+    !e.shiftKey &&
+    window.innerWidth > 768
+  ) {
     handleOutGoingMessage(e);
   }
+});
+
+messsageInput.addEventListener("input", () => {
+  messsageInput.style.height = `${initialInputHeight}px`;
+  messsageInput.style.height = `${messsageInput.scrollHeight}px`;
+  document.querySelector(".chat-form").style.borderRadius = messsageInput =
+    messsageInput.scrollHeight > initialInputHeight ? "15px" : "32px";
 });
 
 // handle file input change
@@ -218,4 +236,8 @@ document
 
 chatbotToggler.addEventListener("click", () =>
   document.body.classList.toggle("show-chatbot")
+);
+
+closeChatbot.addEventListener("click", () =>
+  document.body.classList.remove("show-chatbot")
 );
