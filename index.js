@@ -2,6 +2,7 @@ const chatBody = document.querySelector(".chat-body");
 const messsageInput = document.querySelector(".message-input");
 const fileInput = document.querySelector("#file-input");
 const fileUploadWrapper = document.querySelector(".file-upload-wrapper");
+const fileCancelButton = document.querySelector("#file-cancel");
 
 const API_KEY = "AIzaSyCTK9lZnW6ovB-YzDIy-lD8TGLV0c08FWk";
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
@@ -64,6 +65,14 @@ const handleOutGoingMessage = (e) => {
   userData.message = messsageInput.value.trim();
 
   messsageInput.value = "";
+  fileUploadWrapper.classList.remove("file-uploaded");
+  // Clear the image preview
+  const uploadedImage = fileUploadWrapper.querySelector("img");
+  if (uploadedImage) {
+    uploadedImage.src = "#"; // Reset the image source
+    uploadedImage.style.display = "none"; // Hide the image
+  }
+
   //   create and display user message
   const messageContent = `<div class="message-text"></div>${
     userData.file.data
@@ -140,6 +149,20 @@ fileInput.addEventListener("change", () => {
     fileInput.value = "";
   };
   reader.readAsDataURL(file);
+});
+
+// cancel file upload
+fileCancelButton.addEventListener("click", () => {
+  console.log("ckick");
+  userData.file = {};
+  fileUploadWrapper.classList.remove("file-uploaded");
+
+  // Clear the image preview
+  const uploadedImage = fileUploadWrapper.querySelector("img");
+  if (uploadedImage) {
+    uploadedImage.src = "#"; // Reset the image source
+    uploadedImage.style.display = "none"; // Hide the image
+  }
 });
 
 document.getElementById("send-message").addEventListener("click", (e) => {

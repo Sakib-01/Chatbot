@@ -227,6 +227,9 @@ body {
   position: relative;
 }
 
+.chat-form .file-upload-wrapper :where(img, button) {
+  position: absolute;
+}
 .chat-form .file-upload-wrapper img {
   position: absolute;
   display: none;
@@ -235,6 +238,32 @@ body {
   object-fit: cover;
   border-radius: 50%;
 }
+
+/* .chat-footer .file-upload-wrapper #file-cancel {
+  color: red;
+  background: #fff;
+}
+.chat-form .file-upload-wrapper :where(img, #file-cancel),
+.chat-form .file-upload-wrapper .file-uploaded #file-upload {
+  display: none;
+} */
+
+/* Hide img and #file-cancel inside .file-upload-wrapper */
+/* .chat-form .file-upload-wrapper img,
+.chat-form .file-upload-wrapper #file-cancel {
+  display: none;
+} */
+
+/* Hide #file-upload when .file-uploaded class is added to .file-upload-wrapper */
+/* .chat-form .file-upload-wrapper.file-uploaded #file-upload {
+  display: none;
+} */
+
+/* .chat-form .file-upload-wrapper .file-uploaded img,
+.chat-form .file-upload-wrapper .file-uploaded:hover #file-cancel {
+  display: block;
+} */
+
 .chat-form .file-upload-wrapper .file-uploaded img {
   display: block;
 }
@@ -243,4 +272,27 @@ body {
   width: 50%;
   margin-top: -7px;
   border-radius: 13px 3px 13px 13px;
+}
+
+/* Style the cancel button inside .chat-footer */
+.chat-footer .file-upload-wrapper #file-cancel {
+  color: red;
+  background: #fff;
+}
+
+/* Initially hide img and #file-cancel inside .chat-form .file-upload-wrapper */
+.chat-form .file-upload-wrapper img,
+.chat-form .file-upload-wrapper #file-cancel {
+  display: none;
+}
+
+/* Hide the file upload button when .file-uploaded class is added */
+.chat-form .file-upload-wrapper.file-uploaded #file-upload {
+  display: none;
+}
+
+/* Show img and #file-cancel only when hovering over .file-uploaded */
+.chat-form .file-upload-wrapper.file-uploaded:hover img,
+.chat-form .file-upload-wrapper.file-uploaded:hover #file-cancel {
+  display: block;
 }
