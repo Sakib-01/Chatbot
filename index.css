@@ -8,8 +8,9 @@ body {
   /* display: flex;
   justify-content: center;
   align-items: center; */
-  background: linear-gradient(#eeeeff, #c8c7ff);
-  min-height: 100vh;
+  /* background: linear-gradient(#eeeeff, #c8c7ff); */
+  background: transparent;
+  /* min-height: 100vh; */
 }
 
 #chatbot-toggler {
