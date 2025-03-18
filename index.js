@@ -3,6 +3,7 @@ const messsageInput = document.querySelector(".message-input");
 const fileInput = document.querySelector("#file-input");
 const fileUploadWrapper = document.querySelector(".file-upload-wrapper");
 const fileCancelButton = document.querySelector("#file-cancel");
+const chatbotToggler = document.querySelector("#chatbot-toggler");
 
 const API_KEY = "AIzaSyCTK9lZnW6ovB-YzDIy-lD8TGLV0c08FWk";
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
@@ -22,6 +23,47 @@ const createMessageElemet = (content, classes) => {
 
 const generateBotResponse = async (incomingMessageDiv) => {
   const messageElement = incomingMessageDiv.querySelector(".message-text");
+
+  // Custom response for a wide range of questions about the creator
+  const lowerCaseMessage = userData.message.toLowerCase();
+  const creatorQuestions = [
+    "who creat you",
+    "who create you",
+    "who created you",
+    "who make you",
+    "who made you",
+    "who built you",
+    "who build you",
+    "who is your creator",
+    "who is responsible for you",
+    "who designed you",
+    "who design you",
+    "who develop you",
+    "who developed you",
+    "who is behind you",
+    "who is your maker",
+    "who created this bot",
+    "who create this bot",
+  ];
+
+  if (
+    creatorQuestions.some((question) => lowerCaseMessage.includes(question))
+  ) {
+    messageElement.innerText =
+      "I was created by WFC! (WhiteFrame Creative) a web development agency!";
+    return;
+  }
+
+  const lowerCaseMessage2 = userData.message.toLowerCase();
+  const creatorQuestions2 = ["who is wfc"];
+
+  if (
+    creatorQuestions2.some((question) => lowerCaseMessage2.includes(question))
+  ) {
+    messageElement.innerText =
+      " WFC! (WhiteFrame Creative) a web development agency!";
+    return;
+  }
 
   //   api request
   const requestOption = {
@@ -46,6 +88,7 @@ const generateBotResponse = async (incomingMessageDiv) => {
     const apiResponseText = data.candidates[0].content.parts[0].text
       .replace(/\*\*(.*?)\*\*/g, "$1")
       .trim();
+
     messageElement.innerText = apiResponseText;
   } catch (error) {
     messageElement.innerText = error.message;
@@ -172,3 +215,7 @@ document.getElementById("send-message").addEventListener("click", (e) => {
 document
   .querySelector("#file-upload")
   .addEventListener("click", () => fileInput.click());
+
+chatbotToggler.addEventListener("click", () =>
+  document.body.classList.toggle("show-chatbot")
+);
